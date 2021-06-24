@@ -101,12 +101,15 @@ const update = (state, elapsed) => {
 };
 
 const draw = (state, elapsed) => {
+  // 1) draw the background
   state.context.fillStyle = 'whitesmoke';
   state.context.fillRect(0, 0, state.context.canvas.width, state.context.canvas.height);
 
+  // 2) draw the controllable block
   state.context.fillStyle = 'orangered';
   state.context.fillRect(state.position.x - (state.entityWidth / 2), state.position.y - (state.entityHeight / 2), state.entityWidth, state.entityHeight);
 
+  // 3) draw the FPS
   state.context.fillStyle = 'slategrey';
   state.context.font = '20px sans-serif';
   state.context.fillText((1000 / elapsed).toFixed(2), 0, 20);
