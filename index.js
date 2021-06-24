@@ -36,7 +36,7 @@ globalThis.addEventListener('load', () => {
     ArrowUp: (value) => state.input.down = value,
     ArrowDown: (value) => state.input.up = value,
     ArrowLeft: (value) => state.input.left = value,
-    ArrowRight: (value) => state.input.right = value,
+    ArrowRight: (value) => state.input.right = value
   });
 
   let previous = performance.now();
@@ -46,7 +46,7 @@ globalThis.addEventListener('load', () => {
     update(state, elapsed);
 
     draw(state, elapsed);
-    
+
     previous = current;
     requestAnimationFrame(tick);
   };
@@ -87,7 +87,7 @@ const update = (state, elapsed) => {
   state.velocity.x = clamp(-state.maxVelocity, state.maxVelocity, state.velocity.x);
   state.velocity.y = clamp(-state.maxVelocity, state.maxVelocity, state.velocity.y);
 
-  state.positions.unshift({...state.position});
+  state.positions.unshift({ ...state.position });
   state.positions.splice(400);
 
   state.position.x += state.velocity.x;
@@ -104,7 +104,7 @@ const draw = (state, elapsed) => {
   state.context.strokeStyle = 'cornflowerblue';
   state.context.beginPath();
   state.context.moveTo(state.position.x, state.position.y);
-  for(const position of state.positions) {
+  for (const position of state.positions) {
     state.context.lineTo(position.x, position.y);
   }
   state.context.stroke();
@@ -121,12 +121,12 @@ const clamp = (min, max, value) => Math.max(min, Math.min(max, value));
 
 const mapkeys = (mappings, target = globalThis) => {
   target.addEventListener('keydown', (event) => {
-    if (!mappings.hasOwnProperty(event.key)) { return; }
+    if (mappings[event.key] === undefined) { return; }
 
     mappings[event.key](true);
   });
   target.addEventListener('keyup', (event) => {
-    if (!mappings.hasOwnProperty(event.key)) { return; }
+    if (mappings[event.key] === undefined) { return; }
 
     mappings[event.key](false);
   });
