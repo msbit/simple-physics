@@ -55,8 +55,11 @@ globalThis.addEventListener('load', () => {
 });
 
 const update = (state, elapsed) => {
+  // 1) zero `acceleration`
   state.acceleration.x = 0;
   state.acceleration.y = 0;
+
+  // 2) check inputs and update `acceleration`
   const force = (elapsed * state.accelerationForce) / 1000;
   if (state.input.up) {
     state.acceleration.y += force;
@@ -71,9 +74,11 @@ const update = (state, elapsed) => {
     state.acceleration.x += force;
   }
 
+  // 3) apply `acceleration` to `velocity`
   state.velocity.x += state.acceleration.x;
   state.velocity.y += state.acceleration.y;
 
+  // 4) apply `damping` to `velocity`
   const damping = {
     x: -state.velocity.x,
     y: -state.velocity.y
@@ -84,12 +89,14 @@ const update = (state, elapsed) => {
   state.velocity.x += damping.x;
   state.velocity.y += damping.y;
 
+  // 5) clamp `velocity` between valid values
   state.velocity.x = clamp(-state.maxVelocity, state.maxVelocity, state.velocity.x);
   state.velocity.y = clamp(-state.maxVelocity, state.maxVelocity, state.velocity.y);
 
   state.positions.unshift({ ...state.position });
   state.positions.splice(400);
 
+  // 6) apply `velocity` to `position`
   state.position.x += state.velocity.x;
   state.position.y += state.velocity.y;
 
