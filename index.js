@@ -32,10 +32,10 @@ globalThis.addEventListener('load', () => {
   };
 
   mapkeys({
-    ArrowUp: (value) => state.input.down = value,
-    ArrowDown: (value) => state.input.up = value,
-    ArrowLeft: (value) => state.input.left = value,
-    ArrowRight: (value) => state.input.right = value
+    ArrowUp: v => state.input.down = v,
+    ArrowDown: v => state.input.up = v,
+    ArrowLeft: v => state.input.left = v,
+    ArrowRight: v => state.input.right = v
   });
 
   let previous = performance.now();
