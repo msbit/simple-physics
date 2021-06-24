@@ -9,7 +9,6 @@ globalThis.addEventListener('load', () => {
       x: canvas.width / 2,
       y: canvas.height / 2
     },
-    positions: [],
     maxVelocity: 100,
     velocity: {
       x: 0,
@@ -93,9 +92,6 @@ const update = (state, elapsed) => {
   state.velocity.x = clamp(-state.maxVelocity, state.maxVelocity, state.velocity.x);
   state.velocity.y = clamp(-state.maxVelocity, state.maxVelocity, state.velocity.y);
 
-  state.positions.unshift({ ...state.position });
-  state.positions.splice(400);
-
   // 6) apply `velocity` to `position`
   state.position.x += state.velocity.x;
   state.position.y += state.velocity.y;
@@ -107,14 +103,6 @@ const update = (state, elapsed) => {
 const draw = (state, elapsed) => {
   state.context.fillStyle = 'whitesmoke';
   state.context.fillRect(0, 0, state.context.canvas.width, state.context.canvas.height);
-
-  state.context.strokeStyle = 'cornflowerblue';
-  state.context.beginPath();
-  state.context.moveTo(state.position.x, state.position.y);
-  for (const position of state.positions) {
-    state.context.lineTo(position.x, position.y);
-  }
-  state.context.stroke();
 
   state.context.fillStyle = 'orangered';
   state.context.fillRect(state.position.x - (state.entityWidth / 2), state.position.y - (state.entityHeight / 2), state.entityWidth, state.entityHeight);
